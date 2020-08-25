@@ -16,7 +16,7 @@ class App extends React.Component {
     // we default it to null.
     // THIS IS THE ONLY TIME WE DO DIRECT ASSIGNMENT
     // TO this.state.
-    this.state = { lat: null };
+    this.state = { lat: null, errorMessage: "" };
 
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -24,12 +24,23 @@ class App extends React.Component {
         //The setState method cames from React.Component
         this.setState({ lat: position.coords.latitude });
       },
-      (err) => console.log(err)
+      (err) => {
+        // setState will only update a state property.
+        // It will never add or delete propeties.
+        // Other properties will still untouched
+        this.setState({ errorMessage: err.message });
+      }
     );
   }
   // (React specific) React says we have to define render !!
   render() {
-    return <div>Latitude: {this.state.lat}</div>;
+    return (
+      <div>
+        Latitude: {this.state.lat}
+        <br />
+        Error: {this.state.errorMessage}
+      </div>
+    );
   }
 }
 
