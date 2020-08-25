@@ -66,3 +66,12 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+# Rules of State
+
+- Only usable with class components
+- You will confuse props with state :(
+- 'State' is a JS object that contais data relevant to a Component.
+- Updating 'state' on a Component causes the component to (almost) instantly rerender.
+- State must be initialized when a component is created.
+- State can **only** be updated using the function 'setState'
