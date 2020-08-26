@@ -1,0 +1,11 @@
+.image-list {
+  display: grid;
+  /*auto-fill automatically decides how much columns it will have.
+  minmax 250px minimux 1fr means that have the same size*/
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 10px;
+}
+
+.image-list img {
+  width: 250px;
+}
