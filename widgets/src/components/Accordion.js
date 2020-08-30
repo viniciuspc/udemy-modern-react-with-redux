@@ -7,10 +7,11 @@ const Accordion = ({ items }) => {
     setActiveIndex(index);
   };
   const renderedItems = items.map((item, index) => {
+    const active = index === activeIndex ? "active" : "";
     return (
       <React.Fragment key={item.title}>
         <div
-          className="title active"
+          className={`title ${active}`}
           //Wrap with arrow function the onTitleClick is only executed when the div is clicked
           //Without the arrow function the onTitleClick will be executed as soon as it receives the parameter
           onClick={() => onTitleClick(index)}
@@ -18,19 +19,14 @@ const Accordion = ({ items }) => {
           <i className="dropdown icon"></i>
           {item.title}
         </div>
-        <div className="content active">
+        <div className={`content ${active}`}>
           <p>{item.content}</p>
         </div>
       </React.Fragment>
     );
   });
 
-  return (
-    <div className="ui styled accordion">
-      {renderedItems}
-      <h1>{activeIndex}</h1>
-    </div>
-  );
+  return <div className="ui styled accordion">{renderedItems}</div>;
 };
 
 export default Accordion;
