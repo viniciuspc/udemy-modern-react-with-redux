@@ -5,13 +5,17 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   const ref = useRef();
 
   useEffect(() => {
-    //javascript event listener are called first than react event listeners
-    document.body.addEventListener("click", (event) => {
+    const onBodyClick = (event) => {
       if (ref.current.contains(event.target)) {
         return;
       }
       setOpen(false);
-    });
+    };
+    //javascript event listener are called first than react event listeners
+    document.body.addEventListener("click", onBodyClick);
+    return () => {
+      document.body.removeEventListener("click", onBodyClick);
+    };
   }, []);
 
   const renderedOptions = options.map((option) => {
