@@ -10,6 +10,8 @@ const Search = () => {
   //Nothing: Rua at initial render and after every rerender.
   //Array with elements: Run at initial render and after every rerender,
   //                     if one of the elements has changed
+  // useEffect can have a return a function. This function is used for cleanup.
+  //This cleanup function is called before the next useEffect invocation.
   useEffect(() => {
     const search = async () => {
       const {data} = await axios.get("https://en.wikipedia.org/w/api.php", {
@@ -24,8 +26,19 @@ const Search = () => {
 
       setResults(data.query.search);
     };
-    if(term){
-        search();
+
+    if(term && !results.length){
+      search();
+    } else {
+      const timeoutId = setTimeout(() => {
+        if(term){
+          search();
+        }
+      }, 500)
+
+      return () => {
+        clearTimeout(timeoutId)
+      }
     }
 
   }, [term]);
