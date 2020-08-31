@@ -4,7 +4,7 @@ import axios from "axios";
 const Search = () => {
   const [term, setTerm] = useState("programming");
   const [results, setResults] = useState([]);
-  
+
   //The second argument of the useEffect can be
   //Empty array: Rua at initial render.
   //Nothing: Rua at initial render and after every rerender.
@@ -27,7 +27,16 @@ const Search = () => {
 
     search();
   }, [term]);
-
+  const renderedResults = results.map((result) => {
+    return (
+      <div key={result.pageid} className="item">
+        <div className="content">
+          <div className="header">{result.title}</div>
+          {result.snippet}
+        </div>
+      </div>
+    );
+  })
   return (
     <div>
       <div className="ui form">
@@ -40,6 +49,7 @@ const Search = () => {
           />
         </div>
       </div>
+      <div className="ui celled list">{renderedResults}</div>
     </div>
   );
 };
