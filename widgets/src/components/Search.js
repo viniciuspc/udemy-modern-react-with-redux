@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Search = () => {
-  const [term, setTerm] = useState("");
-
+  const [term, setTerm] = useState("programming");
+  const [results, setResults] = useState([]);
+  
   //The second argument of the useEffect can be
   //Empty array: Rua at initial render.
   //Nothing: Rua at initial render and after every rerender.
@@ -11,7 +12,7 @@ const Search = () => {
   //                     if one of the elements has changed
   useEffect(() => {
     const search = async () => {
-      await axios.get("https://en.wikipedia.org/w/api.php", {
+      const {data} = await axios.get("https://en.wikipedia.org/w/api.php", {
         params: {
           action: "query",
           list: "search",
@@ -20,6 +21,8 @@ const Search = () => {
           srsearch: term
         }
       });
+
+      setResults(data.query.search);
     };
 
     search();
