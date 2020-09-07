@@ -35,4 +35,6 @@ const mapStateToProps = (state) => {
 
 //The connect function of react-redux returns another function
 //Beacuse of this we need the second set of () passing our component
+//The connect function will take the function in the second parameter,
+//and pass it to the store.dispatch function.
 export default connect(mapStateToProps, { selectSong })(SongList);
