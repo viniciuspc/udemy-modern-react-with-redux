@@ -6,8 +6,17 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   // make sure to dispatch the function returned by the action creator
   await dispatch(fetchPosts());
   // return an array of only unique user ids
-  const userIds = _.uniq(_.map(getState().posts, "userId"));
-  userIds.forEach((id) => dispatch(fetchUser(id)));
+  // const userIds = _.uniq(_.map(getState().posts, "userId"));
+  // userIds.forEach((id) => dispatch(fetchUser(id)));
+
+  // THe lodash chain fucntion will chain different fucntions to manipulate data
+  // the result of the preview function will be passed as first argument of the next function
+  _.chain(getState.posts)
+    .map("userId")
+    .uniq()
+    .forEach((id) => dispatch(fetchUser(id)))
+    // the value() function tells chain to execute the steps
+    .value();
 };
 
 // React Thunk will call our function, passing dispatch and getStae as arguments
