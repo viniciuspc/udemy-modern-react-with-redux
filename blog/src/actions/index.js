@@ -1,6 +1,14 @@
 import _ from "lodash";
 import jsonPlaceholder from "../apis/jsonPlaceholder";
 
+export const fetchPostsAndUsers = () => async (dispatch) => {
+  // When caling an action creator inside of other action creator
+  // make sure to dispatch the function returned by the action creator
+  console.log("About to fetch posts");
+  await dispatch(fetchPosts());
+  console.log("fetched posts!");
+};
+
 // React Thunk will call our function, passing dispatch and getStae as arguments
 // With dispatch we can write any data we want at redux state store
 // With getSteate we can read any data we want from redux state store
@@ -12,12 +20,19 @@ export const fetchPosts = () => async (dispatch) => {
 };
 
 //A function that returns a function that calls _fetchUser(id, dispatch)
-export const fetchUser = (id) => (dispatch) => _fetchUser(id, dispatch);
-
-// Uderscore Indicates a private function.
-// This function is the memoize function
-const _fetchUser = _.memoize(async (id, dispatch) => {
+export const fetchUser = (id) => async (dispatch) => {
   const response = await jsonPlaceholder.get(`/users/${id}`);
 
   dispatch({ type: "FETCH_USER", payload: response.data });
-});
+};
+
+// //A function that returns a function that calls _fetchUser(id, dispatch)
+// export const fetchUser = (id) => (dispatch) => _fetchUser(id, dispatch);
+//
+// // Uderscore Indicates a private function.
+// // This function is the memoize function
+// const _fetchUser = _.memoize(async (id, dispatch) => {
+//   const response = await jsonPlaceholder.get(`/users/${id}`);
+//
+//   dispatch({ type: "FETCH_USER", payload: response.data });
+// });
